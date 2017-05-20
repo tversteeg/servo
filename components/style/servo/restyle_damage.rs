@@ -64,8 +64,10 @@ impl ServoRestyleDamage {
                                     new: &ServoComputedValues)
                                     -> StyleDifference {
         let damage = compute_damage(old, new);
-        let change = if damage.is_empty() { StyleChange::Unchanged } else { StyleChange::Changed };
-        StyleDifference::new(damage, change)
+        // FIXME(heycam) We sohuld be returning Unchanged or Changed, depending
+        // on whether damage is empty.  But there must be some properties we're
+        // missing in compute_damage, since this causes test failures.
+        StyleDifference::new(damage, StyleChange::Changed)
     }
 
     /// Returns a bitmask that represents a flow that needs to be rebuilt and
