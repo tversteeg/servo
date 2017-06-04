@@ -1085,8 +1085,8 @@
             pub type T = ::values::computed::${length_type};
         }
 
-        #[derive(Clone, Debug, HasViewportPercentage, PartialEq)]
         #[cfg_attr(feature = "servo", derive(HeapSizeOf))]
+        #[derive(Clone, Debug, HasViewportPercentage, PartialEq, ToCss)]
         pub struct SpecifiedValue(pub ${length_type});
 
         % if length_type == "MozLength":
@@ -1129,12 +1129,6 @@
                 }
             % endif
             ret.map(SpecifiedValue)
-        }
-
-        impl ToCss for SpecifiedValue {
-            fn to_css<W>(&self, dest: &mut W) -> fmt::Result where W: fmt::Write {
-                self.0.to_css(dest)
-            }
         }
 
         impl ToComputedValue for SpecifiedValue {

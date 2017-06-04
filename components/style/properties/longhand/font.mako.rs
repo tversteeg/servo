@@ -2153,13 +2153,12 @@ ${helpers.single_keyword("-moz-math-variant",
     use style_traits::ToCss;
     use values::specified::length::{AU_PER_PT, FontBaseSize, NoCalcLength};
 
-    #[derive(Clone, Debug, HasViewportPercentage, PartialEq)]
+    #[derive(Clone, Debug, HasViewportPercentage, PartialEq, ToCss)]
     pub struct SpecifiedValue(pub NoCalcLength);
 
     pub mod computed_value {
         pub type T = super::Au;
     }
-
 
     impl ToComputedValue for SpecifiedValue {
         type ComputedValue = computed_value::T;
@@ -2182,12 +2181,6 @@ ${helpers.single_keyword("-moz-math-variant",
         }
         fn from_computed_value(other: &computed_value::T) -> Self {
             SpecifiedValue(ToComputedValue::from_computed_value(other))
-        }
-    }
-
-    impl ToCss for SpecifiedValue {
-        fn to_css<W>(&self, dest: &mut W) -> fmt::Result where W: fmt::Write {
-            self.0.to_css(dest)
         }
     }
 
